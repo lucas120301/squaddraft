@@ -1,0 +1,13 @@
+aws_region   = "eu-west-2"
+project_name = "squaddraft"
+environment  = "prod"
+
+# Leave empty on first apply; set to http://<alb_dns_name> after terraform output.
+frontend_origin = ""
+
+database_url        = "postgresql://postgres:PASSWORD@db.PROJECT.supabase.co:5432/postgres"
+client_token_secret = "replace-with-long-random-string"
+room_code_secret    = "replace-with-another-long-random-string"
+
+github_owner = "lucas120301"
+github_repo  = "squaddraft"

@@ -1,0 +1,65 @@
+name: Deploy
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+env:
+  AWS_REGION: ${{ vars.AWS_REGION || 'eu-west-2' }}
+  PROJECT_NAME: ${{ vars.PROJECT_NAME || 'squaddraft' }}
+  ENVIRONMENT: ${{ vars.ENVIRONMENT || 'prod' }}
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Configure AWS credentials (OIDC)
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ vars.AWS_DEPLOY_ROLE_ARN }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v2
+
+      - name: Set image tags
+        id: meta
+        run: |
+          PREFIX="${{ env.PROJECT_NAME }}-${{ env.ENVIRONMENT }}"
+          echo "backend_repo=${{ steps.login-ecr.outputs.registry }}/${PREFIX}-backend" >> "$GITHUB_OUTPUT"
+          echo "frontend_repo=${{ steps.login-ecr.outputs.registry }}/${PREFIX}-frontend" >> "$GITHUB_OUTPUT"
+          echo "image_tag=${GITHUB_SHA::7}" >> "$GITHUB_OUTPUT"
+
+      - name: Build and push backend
+        uses: docker/build-push-action@v6
+        with:
+          context: backend
+          push: true
+          tags: |
+            ${{ steps.meta.outputs.backend_repo }}:latest
+            ${{ steps.meta.outputs.backend_repo }}:${{ steps.meta.outputs.image_tag }}
+
+      - name: Build and push frontend
+        uses: docker/build-push-action@v6
+        with:
+          context: frontend
+          push: true
+          build-args: |
+            NEXT_PUBLIC_API_BASE_URL=${{ vars.PUBLIC_API_URL }}
+            NEXT_PUBLIC_WS_BASE_URL=${{ vars.PUBLIC_WS_URL }}
+          tags: |
+            ${{ steps.meta.outputs.frontend_repo }}:latest
+            ${{ steps.meta.outputs.frontend_repo }}:${{ steps.meta.outputs.image_tag }}
+
+      - name: Redeploy ECS services
+        run: |
+          CLUSTER="${{ env.PROJECT_NAME }}-${{ env.ENVIRONMENT }}-cluster"
+          aws ecs update-service --cluster "$CLUSTER" --service "${{ env.PROJECT_NAME }}-${{ env.ENVIRONMENT }}-backend" --force-new-deployment
+          aws ecs update-service --cluster "$CLUSTER" --service "${{ env.PROJECT_NAME }}-${{ env.ENVIRONMENT }}-frontend" --force-new-deployment

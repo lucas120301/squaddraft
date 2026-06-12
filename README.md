@@ -55,3 +55,13 @@ Open http://localhost:3000
 - **Frontend:** Next.js, TypeScript, Tailwind, Zustand
 - **Backend:** FastAPI, Python 3.11+, SQLAlchemy + asyncpg
 - **Database:** Supabase Postgres (`supabase/migrations/` + CSV import)
+
+## Cloud deploy (AWS)
+
+Terraform + GitHub Actions scaffold lives in [`infra/`](infra/DEPLOY.md):
+
+- **Terraform** — ECR, ECS Fargate, ALB, SSM secrets
+- **GitHub Actions** — CI tests + OIDC deploy (no long-lived AWS keys)
+- **Database** — keep Supabase; no RDS required for v1
+
+See [infra/DEPLOY.md](infra/DEPLOY.md) for setup steps.

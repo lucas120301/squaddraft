@@ -1,0 +1,31 @@
+export const ERAS = [
+  "1995-2000",
+  "2000-2005",
+  "2005-2010",
+  "2010-2015",
+  "2015-2020",
+  "2020-2025",
+] as const;
+
+export const CLUB_COLORS: Record<string, string> = {
+  arsenal: "#EF0107",
+  aston_villa: "#95BFE5",
+  brighton: "#0057B8",
+  chelsea: "#034694",
+  crystal_palace: "#1B458F",
+  everton: "#003399",
+  fulham: "#000000",
+  leicester: "#003090",
+  liverpool: "#C8102E",
+  man_city: "#6CABDD",
+  man_united: "#DA291C",
+  newcastle: "#241F20",
+  southampton: "#D71920",
+  tottenham: "#132257",
+  west_ham: "#7A263A",
+  wolves: "#FDB913",
+  leeds: "#FFCD00",
+  nottm_forest: "#DD0000",
+  bournemouth: "#DA291C",
+  brentford: "#E30613",
+};

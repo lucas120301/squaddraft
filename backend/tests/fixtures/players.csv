@@ -1,0 +1,9 @@
+id,name,slug,primary_position,secondary_positions,base_rating,attack,midfield,defence,goalkeeper,consistency
+david_de_gea,David de Gea,david_de_gea,GK,,88,15,20,25,92,82
+gary_neville,Gary Neville,gary_neville,RB,LB|CB,84,20,35,88,10,80
+john_terry,John Terry,john_terry,CB,LB|RB,89,25,40,92,10,85
+frank_lampard,Frank Lampard,frank_lampard,CM,CAM|DM,90,78,92,55,10,88
+wayne_rooney,Wayne Rooney,wayne_rooney,ST,LW|RW|CAM,91,92,75,45,10,86
+ashley_young,Ashley Young,ashley_young,LW,RW|LB|RB,83,80,72,60,10,79
+nani,Nani,nani,LW,RW|CAM,84,85,78,40,10,78
+kyle_walker,Kyle Walker,kyle_walker,RB,LB|CB,86,35,55,88,10,84

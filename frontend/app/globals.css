@@ -1,0 +1,59 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply min-h-screen bg-[#0a0e17] text-slate-100;
+  }
+}
+
+@layer components {
+  .card {
+    @apply rounded-2xl border border-slate-800/80 bg-slate-900/60 backdrop-blur-sm;
+  }
+
+  .input {
+    @apply w-full rounded-xl border border-slate-700 bg-slate-950/80 px-4 py-3 text-slate-100 outline-none transition focus:border-blue-500 focus:ring-1 focus:ring-blue-500;
+  }
+
+  .btn-primary {
+    @apply rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 px-5 py-3 font-semibold text-white shadow-lg shadow-blue-900/30 transition hover:from-blue-500 hover:to-indigo-500 disabled:cursor-not-allowed disabled:opacity-40;
+  }
+
+  .btn-secondary {
+    @apply rounded-xl border border-slate-600 bg-slate-800/80 px-4 py-2.5 font-medium text-slate-100 transition hover:border-slate-500 hover:bg-slate-700/80 disabled:cursor-not-allowed disabled:opacity-40;
+  }
+
+  .spin-reel-window {
+    @apply relative h-14 overflow-hidden rounded-lg border border-slate-700 bg-slate-950;
+  }
+
+  .spin-reel-track {
+    @apply flex flex-col items-center transition-transform duration-[1.4s] ease-[cubic-bezier(0.12,0.8,0.2,1)];
+  }
+
+  .spin-reel-item {
+    @apply flex h-14 w-full shrink-0 items-center justify-center px-2 text-center text-sm font-bold tracking-wide;
+  }
+
+  .pitch {
+    @apply relative mx-auto aspect-[3/4] w-full overflow-hidden rounded-xl border border-emerald-900/60 bg-gradient-to-b from-emerald-950/80 to-emerald-900/40;
+  }
+
+  .pitch-line {
+    @apply pointer-events-none absolute inset-x-4 top-1/2 border-t border-emerald-700/30;
+  }
+
+  .pitch-slot-empty {
+    @apply flex h-9 w-9 items-center justify-center rounded-lg border border-dashed border-slate-500/70 bg-slate-950/30 text-[9px] font-bold text-slate-400;
+  }
+
+  .pitch-slot-empty--active {
+    @apply border-amber-400/70 bg-amber-950/30 text-amber-200;
+  }
+
+  .pitch-shirt {
+    @apply flex h-8 w-8 items-center justify-center rounded-md border border-red-700/60 bg-gradient-to-b from-red-600 to-red-800 text-[9px] font-bold tracking-tight text-amber-100 shadow-sm;
+  }
+}

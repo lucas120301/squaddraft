@@ -1,0 +1,13 @@
+id,player_id,club_id,era,primary_position,secondary_positions,rating_modifier,include
+david_de_gea_man_united_2010_2015,david_de_gea,man_united,2010-2015,GK,,0,true
+gary_neville_man_united_2000_2005,gary_neville,man_united,2000-2005,RB,LB|CB,0,true
+john_terry_chelsea_2010_2015,john_terry,chelsea,2010-2015,CB,LB|RB,0,true
+frank_lampard_chelsea_2010_2015,frank_lampard,chelsea,2010-2015,CM,CAM|DM,0,true
+wayne_rooney_man_united_2010_2015,wayne_rooney,man_united,2010-2015,ST,LW|RW|CAM,0,true
+ashley_young_man_united_2010_2015,ashley_young,man_united,2010-2015,LW,RW|LB|RB,0,true
+nani_man_united_2010_2015,nani,man_united,2010-2015,LW,RW|CAM,0,true
+kyle_walker_man_city_2015_2020,kyle_walker,man_city,2015-2020,RB,LB|CB,0,true
+david_de_gea_man_united_2015_2020,david_de_gea,man_united,2015-2020,GK,,0,true
+frank_lampard_chelsea_2005_2010,frank_lampard,chelsea,2005-2010,CM,CAM|DM,0,true
+john_terry_chelsea_2005_2010,john_terry,chelsea,2005-2010,CB,LB|RB,0,true
+wayne_rooney_man_united_2005_2010,wayne_rooney,man_united,2005-2010,ST,LW|RW|CAM,0,true

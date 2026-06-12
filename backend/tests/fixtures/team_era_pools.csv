@@ -1,0 +1,4 @@
+id,club_id,era,spin_tier,min_eligible_players,is_active
+man_united_2010_2015,man_united,2010-2015,2,5,true
+chelsea_2010_2015,chelsea,2010-2015,2,5,true
+man_city_2015_2020,man_city,2015-2020,2,5,true

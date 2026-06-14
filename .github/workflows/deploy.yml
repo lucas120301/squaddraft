@@ -31,11 +31,19 @@ jobs:
 
       - name: Set image tags
         id: meta
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
         run: |
-          PREFIX="${{ env.PROJECT_NAME }}-${{ env.ENVIRONMENT }}"
-          echo "backend_repo=${{ steps.login-ecr.outputs.registry }}/${PREFIX}-backend" >> "$GITHUB_OUTPUT"
-          echo "frontend_repo=${{ steps.login-ecr.outputs.registry }}/${PREFIX}-frontend" >> "$GITHUB_OUTPUT"
-          echo "image_tag=${GITHUB_SHA::7}" >> "$GITHUB_OUTPUT"
+          trim() { printf '%s' "$1" | tr -d '[:space:]'; }
+          PROJECT="$(trim "$PROJECT_NAME")"
+          ENV="$(trim "$ENVIRONMENT")"
+          PREFIX="${PROJECT}-${ENV}"
+          IMAGE_TAG="${GITHUB_SHA:0:7}"
+          {
+            echo "backend_repo=${ECR_REGISTRY}/${PREFIX}-backend"
+            echo "frontend_repo=${ECR_REGISTRY}/${PREFIX}-frontend"
+            echo "image_tag=${IMAGE_TAG}"
+          } >> "$GITHUB_OUTPUT"
 
       - name: Build and push backend
         uses: docker/build-push-action@v6
@@ -60,6 +68,10 @@ jobs:
 
       - name: Redeploy ECS services
         run: |
-          CLUSTER="${{ env.PROJECT_NAME }}-${{ env.ENVIRONMENT }}-cluster"
-          aws ecs update-service --cluster "$CLUSTER" --service "${{ env.PROJECT_NAME }}-${{ env.ENVIRONMENT }}-backend" --force-new-deployment
-          aws ecs update-service --cluster "$CLUSTER" --service "${{ env.PROJECT_NAME }}-${{ env.ENVIRONMENT }}-frontend" --force-new-deployment
+          trim() { printf '%s' "$1" | tr -d '[:space:]'; }
+          PROJECT="$(trim "$PROJECT_NAME")"
+          ENV="$(trim "$ENVIRONMENT")"
+          PREFIX="${PROJECT}-${ENV}"
+          CLUSTER="${PREFIX}-cluster"
+          aws ecs update-service --cluster "$CLUSTER" --service "${PREFIX}-backend" --force-new-deployment
+          aws ecs update-service --cluster "$CLUSTER" --service "${PREFIX}-frontend" --force-new-deployment
